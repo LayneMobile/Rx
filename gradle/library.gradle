@@ -14,15 +14,28 @@
  * limitations under the License.
  */
 
-apply from: "${rootProject.rootDir}/gradle/library.gradle"
+apply plugin: 'com.android.library'
 
-dependencies {
-    compile project(':requests')
-    compile "com.squareup.retrofit2:retrofit:${appRetrofitVersion}"
-    compile "com.squareup.retrofit2:adapter-rxjava:${appRetrofitVersion}"
+android {
+    compileSdkVersion appCompileSdkVersion as int
+    buildToolsVersion appBuildToolsVersion
 
-    // testing
-    testCompile "junit:junit:${appJunitVersion}"
-    testCompile "org.mockito:mockito-core:${appMockitoVersion}"
-    testCompile "org.robolectric:robolectric:${appRoboelectricVersion}"
+    defaultConfig {
+        minSdkVersion appMinSdkVersion as int
+        targetSdkVersion appTargetSdkVersion as int
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
 }
+
+apply from: 'https://raw.github.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'

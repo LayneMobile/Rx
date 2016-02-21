@@ -14,25 +14,7 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-
-android {
-    compileSdkVersion appCompileSdkVersion as int
-    buildToolsVersion appBuildToolsVersion
-
-    defaultConfig {
-        minSdkVersion appMinSdkVersion as int
-        targetSdkVersion appTargetSdkVersion as int
-        versionCode VERSION_CODE as int
-        versionName VERSION_NAME
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-    }
-}
+apply from: "${rootProject.rootDir}/gradle/library.gradle"
 
 dependencies {
     compile "io.reactivex:rxandroid:${appRxAndroidVersion}"
@@ -44,5 +26,3 @@ dependencies {
     testCompile "org.mockito:mockito-core:${appMockitoVersion}"
     testCompile "org.robolectric:robolectric:${appRoboelectricVersion}"
 }
-
-apply from: 'https://raw.github.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'

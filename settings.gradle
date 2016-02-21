@@ -15,5 +15,6 @@
  */
 
 include ':requests',
+        ':requests-retrofit',
         ':subscriptions',
         ':subscriptions-components'

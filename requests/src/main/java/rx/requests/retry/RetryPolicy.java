@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package rx.requests;
+package rx.requests.retry;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import rx.functions.Func2;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
+public abstract class RetryPolicy implements Func2<Integer, Throwable, Boolean> {
+    protected abstract boolean retry(int retryCount, Throwable exception);
+
+    @Override public final Boolean call(Integer integer, Throwable throwable) {
+        return retry(integer, throwable);
     }
 }

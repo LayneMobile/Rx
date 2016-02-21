@@ -35,7 +35,9 @@ android {
 }
 
 dependencies {
-    compile project(':subscriptions')
+    compile project(':requests')
+    compile "com.squareup.retrofit2:retrofit:${appRetrofitVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${appRetrofitVersion}"
 
     // testing
     testCompile "junit:junit:${appJunitVersion}"

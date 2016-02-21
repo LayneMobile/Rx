@@ -24,19 +24,53 @@ public final class FragmentLifecycleProducer extends LifecycleProducer {
         return new FragmentLifecycleProducer();
     }
 
-    @Override public final void onAttach() {
+    @Override
+    public final void onAttach() {
         super.onAttach();
     }
 
-    @Override public final void onDestroyView() {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
+    public final void onViewCreated() {
+        super.onViewCreated();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public final void onDestroyView() {
         super.onDestroyView();
     }
 
-    @Override public final void onDetach() {
-        super.onDetach();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
-    @Override public final void onViewCreated() {
-        super.onViewCreated();
+    @Override
+    public final void onDetach() {
+        super.onDetach();
     }
 }

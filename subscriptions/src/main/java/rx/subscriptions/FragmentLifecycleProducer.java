@@ -14,6 +14,29 @@
  * limitations under the License.
  */
 
-include ':requests',
-        ':subscriptions',
-        ':subscriptions-components'
+package rx.subscriptions;
+
+
+public final class FragmentLifecycleProducer extends LifecycleProducer {
+    private FragmentLifecycleProducer() {}
+
+    public static FragmentLifecycleProducer create() {
+        return new FragmentLifecycleProducer();
+    }
+
+    @Override public final void onAttach() {
+        super.onAttach();
+    }
+
+    @Override public final void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override public final void onDetach() {
+        super.onDetach();
+    }
+
+    @Override public final void onViewCreated() {
+        super.onViewCreated();
+    }
+}

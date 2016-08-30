@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package rx.rxsubscriptions.subscribers;
+package com.laynemobile.rx.subscriptions.subscribers;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -23,7 +23,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-import com.laynemobile.rx.subscriptions.subscribers.WeakSubscriber;
+import com.laynemobile.rx.subscriptions.internal.subscribers.ReferenceSubscriber;
+import com.laynemobile.rx.subscriptions.internal.subscribers.StringSubscriber;
 
 import junit.framework.Assert;
 
@@ -49,8 +50,6 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.rxsubscriptions.internal.subscribers.ReferenceSubscriber;
-import rx.rxsubscriptions.internal.subscribers.StringSubscriber;
 
 @SuppressWarnings("unchecked")
 @RunWith(RobolectricTestRunner.class)
@@ -248,7 +247,13 @@ public class WeakSubscriberTest {
             subscription = observable.subscribe(subscriber);
         }
 
+        // assert we always have a reference here
+        Assert.assertNotNull(tag, subscriberRef.get());
+
+        // unsubscribe
         subscription.unsubscribe();
+        Assert.assertTrue(tag, subscriber.isUnsubscribed());
+        Assert.assertTrue(tag, subscription.isUnsubscribed());
         subscription = null;
         subscriber = null;
 

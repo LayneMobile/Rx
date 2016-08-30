@@ -18,13 +18,10 @@ package com.laynemobile.rx.subscriptions.subscribers;
 
 import com.laynemobile.rx.subscriptions.internal.Util;
 
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-
 import rx.Observer;
 import rx.Producer;
 import rx.SingleSubscriber;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.observers.Subscribers;
@@ -34,13 +31,12 @@ import rx.observers.Subscribers;
  *
  * @param <T>
  */
-public final class WeakSubscriber<T> extends Subscriber<T> {
-    private final Delegate<T> delegate;
+public final class WeakSubscriber<T> extends NotifyingSubscriber<T> {
+    private volatile Subscriber<? super T> actual;
 
-    private WeakSubscriber(Delegate<T> delegate) {
-        super(delegate);
-        this.delegate = delegate;
-        add(new WeakSubscription(delegate));
+    private WeakSubscriber(Subscriber<? super T> actual) {
+        super();
+        this.actual = actual;
     }
 
     public static <T> WeakSubscriber<T> create(Action1<? super T> onNext) {
@@ -65,92 +61,49 @@ public final class WeakSubscriber<T> extends Subscriber<T> {
     }
 
     public static <T> WeakSubscriber<T> create(Subscriber<? super T> actual) {
-        return new WeakSubscriber<T>(new Delegate<T>(actual));
+        return new WeakSubscriber<T>(actual);
     }
 
     @Override public void onNext(T t) {
-        delegate.onNext(t);
+        final Subscriber<? super T> a = this.actual;
+        if (a != null) {
+            a.onNext(t);
+        }
     }
 
     @Override public void onError(Throwable e) {
-        delegate.onError(e);
+        final Subscriber<? super T> a = this.actual;
+        if (a != null) {
+            a.onError(e);
+        }
     }
 
     @Override public void onCompleted() {
-        delegate.onCompleted();
+        final Subscriber<? super T> a = this.actual;
+        if (a != null) {
+            a.onCompleted();
+        }
+    }
+
+    @Override public void setProducer(Producer producer) {
+        Subscriber<? super T> a = this.actual;
+        if (a != null) {
+            a.setProducer(producer);
+        }
     }
 
     @Override public void onStart() {
-        delegate.onStart();
-    }
-
-    private static final class WeakSubscription implements Subscription {
-        private static final AtomicIntegerFieldUpdater<WeakSubscription> UNSUBSCRIBED_UPDATER
-                = AtomicIntegerFieldUpdater.newUpdater(WeakSubscription.class, "unsubscribed");
-
-        private final Delegate<?> parent;
-        private volatile int unsubscribed;
-
-        private <T> WeakSubscription(Delegate<T> parent) {
-            this.parent = parent;
-        }
-
-        @Override public void unsubscribe() {
-            if (UNSUBSCRIBED_UPDATER.compareAndSet(this, 0, 1)) {
-                Subscriber<?> actual = parent.actual;
-                parent.actual = null;
-                if (actual != null) {
-                    actual.unsubscribe();
-                }
-            }
-        }
-
-        @Override public boolean isUnsubscribed() {
-            return unsubscribed != 0;
+        Subscriber<? super T> a = this.actual;
+        if (a != null) {
+            a.onStart();
         }
     }
 
-    private static final class Delegate<T> extends Subscriber<T> {
-        private volatile Subscriber<? super T> actual;
-
-        private Delegate(Subscriber<? super T> actual) {
-            super();
-            this.actual = actual;
-        }
-
-        @Override public void onNext(T t) {
-            final Subscriber<? super T> actual = this.actual;
-            if (actual != null) {
-                actual.onNext(t);
-            }
-        }
-
-        @Override public void onError(Throwable e) {
-            final Subscriber<? super T> actual = this.actual;
-            if (actual != null) {
-                actual.onError(e);
-            }
-        }
-
-        @Override public void onCompleted() {
-            final Subscriber<? super T> actual = this.actual;
-            if (actual != null) {
-                actual.onCompleted();
-            }
-        }
-
-        @Override public void setProducer(Producer producer) {
-            Subscriber<? super T> actual = this.actual;
-            if (actual != null) {
-                actual.setProducer(producer);
-            }
-        }
-
-        @Override public void onStart() {
-            Subscriber<? super T> actual = this.actual;
-            if (actual != null) {
-                actual.onStart();
-            }
+    @Override protected void onUnsubscribe() {
+        Subscriber<? super T> a = this.actual;
+        this.actual = null;
+        if (a != null) {
+            a.unsubscribe();
         }
     }
 }

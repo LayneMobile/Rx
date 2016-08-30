@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package rx.rxsubscriptions.internal.subscribers;
+package com.laynemobile.rx.subscriptions.internal.subscribers;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-include ':rx-requests',
-        ':rx-requests-retrofit',
-        ':rx-subscriptions',
-        ':rx-subscriptions-components'
+apply from: "${rootProject.rootDir}/gradle/android-library.gradle"
+
+dependencies {
+    compile project(':rx-requests')
+    compile "com.squareup.retrofit2:retrofit:${appRetrofitVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${appRetrofitVersion}"
+}

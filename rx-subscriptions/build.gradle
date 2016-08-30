@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-include ':rx-requests',
-        ':rx-requests-retrofit',
-        ':rx-subscriptions',
-        ':rx-subscriptions-components'
+apply from: "${rootProject.rootDir}/gradle/android-library.gradle"
+
+dependencies {
+    compile "io.reactivex:rxandroid:${appRxAndroidVersion}"
+    compile "io.reactivex:rxjava:${appRxJavaVersion}"
+    compile "com.android.support:support-annotations:${appAndroidSupportVersion}"
+}

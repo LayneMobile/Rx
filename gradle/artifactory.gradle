@@ -14,7 +14,26 @@
  * limitations under the License.
  */
 
-include ':rx-requests',
-        ':rx-requests-retrofit',
-        ':rx-subscriptions',
-        ':rx-subscriptions-components'
+apply plugin: "com.jfrog.artifactory"
+
+artifactory {
+    contextUrl = 'https://oss.jfrog.org'
+
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+
+            if (project.hasProperty('bintrayUser')) {
+                username = project.property('bintrayUser')
+                password = project.property('bintrayKey')
+            }
+        }
+
+        defaults {
+            publishConfigs('archives')
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
+}

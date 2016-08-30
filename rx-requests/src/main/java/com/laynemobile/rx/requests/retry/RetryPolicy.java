@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 
-include ':rx-requests',
-        ':rx-requests-retrofit',
-        ':rx-subscriptions',
-        ':rx-subscriptions-components'
+package com.laynemobile.rx.requests.retry;
+
+import rx.functions.Func2;
+
+public abstract class RetryPolicy implements Func2<Integer, Throwable, Boolean> {
+    protected abstract boolean retry(int retryCount, Throwable exception);
+
+    @Override public final Boolean call(Integer integer, Throwable throwable) {
+        return retry(integer, throwable);
+    }
+}

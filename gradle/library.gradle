@@ -16,6 +16,10 @@
 
 apply plugin: 'com.android.library'
 
+def pubDir = "${rootDir}/gradle"
+apply from: "${pubDir}/pom.gradle"
+apply from: "${pubDir}/mavenPublish.gradle"
+
 android {
     compileSdkVersion appCompileSdkVersion as int
     buildToolsVersion appBuildToolsVersion
@@ -38,4 +42,4 @@ android {
     }
 }
 
-apply from: 'https://raw.github.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'
+//apply from: 'https://raw.github.com/LayneMobile/gradle-publish/master/android-artifacts.gradle'

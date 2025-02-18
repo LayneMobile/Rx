@@ -48,7 +48,7 @@ install {
         }
     }
 }
-
+/*
 // Configure gradle-bintray-plugin (for publishing releases)
 bintray {
     configurations = ['archives']
@@ -78,3 +78,4 @@ if (project.hasProperty('mavenSync') && project.hasProperty('sonatypeUsername') 
     sync.user = project.sonatypeUsername
     sync.password = project.sonatypePassword
 }
+*/

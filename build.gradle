@@ -25,14 +25,16 @@ ext {
 
 buildscript {
     repositories {
-        jcenter()
         mavenLocal()
+        maven { url "https://maven.google.com" }
+        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${appGradleAndroidVersion}"
         classpath "com.github.dcendents:android-maven-gradle-plugin:${appGradleAndroidMavenVersion}"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appGradleBintrayPluginVersion}"
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:${appGradleBuildInfoExtractorVersion}"
+//        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appGradleBintrayPluginVersion}"
+//        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:${appGradleBuildInfoExtractorVersion}"
         classpath "com.neenbedankt.gradle.plugins:android-apt:${appGradleAptVersion}"
         classpath "com.netflix.nebula:gradle-extra-configurations-plugin:${appGradleNebulaVersion}"
     }
@@ -50,8 +52,10 @@ allprojects {
 
 subprojects {
     repositories {
-        jcenter()
         mavenLocal()
+        maven { url "https://maven.google.com" }
+        mavenCentral()
+        jcenter()
     }
 
     configurations {

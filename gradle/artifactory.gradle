@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-apply plugin: "com.jfrog.artifactory"
-
-artifactory {
-    contextUrl = 'https://oss.jfrog.org'
-
-    publish {
-        repository {
-            repoKey = 'oss-snapshot-local'
-
-            if (project.hasProperty('bintrayUser')) {
-                username = project.property('bintrayUser')
-                password = project.property('bintrayKey')
-            }
-        }
-
-        defaults {
-            publishConfigs('archives')
-        }
-    }
-    resolve {
-        repoKey = 'jcenter'
-    }
-}
+//apply plugin: "com.jfrog.artifactory"
+//
+//artifactory {
+//    contextUrl = 'https://oss.jfrog.org'
+//
+//    publish {
+//        repository {
+//            repoKey = 'oss-snapshot-local'
+//
+//            if (project.hasProperty('bintrayUser')) {
+//                username = project.property('bintrayUser')
+//                password = project.property('bintrayKey')
+//            }
+//        }
+//
+//        defaults {
+//            publishConfigs('archives')
+//        }
+//    }
+//    resolve {
+//        repoKey = 'jcenter'
+//    }
+//}

@@ -20,10 +20,14 @@ ext {
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.jfrog.artifactory'
+//apply plugin: 'com.jfrog.bintray'
+//apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'provided-base'
+
+def pubDir = "${rootDir}/gradle"
+apply from: "${pubDir}/pom.gradle"
+apply from: "${pubDir}/mavenPublish.gradle"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
